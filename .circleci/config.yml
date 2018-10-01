@@ -21,7 +21,7 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-        key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
 
       - run: npm install
 
