@@ -37,7 +37,7 @@ jobs:
       machine:
         enabled: true
       steps:
-        run:
+        - run:
           name: Deploy Over SSH
           command: |
           ssh $SSH_USER@SSH_HOST "cd ~/TeamBoosted/server && git pull && ./rebuild.sh"
