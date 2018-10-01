@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('./index');
+const server = require('../index.js');
 
 describe('Loading Express', () => {
   afterEach(function () {

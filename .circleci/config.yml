@@ -21,17 +21,34 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v2-dependencies-
+        key: dependency-cache-{{ checksum "package.json" }}
 
       - run: npm install
 
       - save_cache:
           paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
+            - ./node_modules
+          key: dependency-cache-{{ checksum "package.json" }}
         
       # run tests!
       - run: npm test
+    
+    deploy:
+      machine:
+        enabled: true
+      steps:
+        run:
+          name: Deploy Over SSH
+          command: |
+          ssh $SSH_USER@SSH_HOST "cd ~/TeamBoosted/server && git pull && ./rebuild.sh"
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+        requires:
+          - build
+        filters:
+          branches:
+            only: master
