@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const { getMovieByTitle } = require('./api/movies');
+const api = require('./routes/routes.js');
 
 const app = express();
 const PORT = process.env.PORT || 80;
@@ -32,14 +34,7 @@ app.post('/user/signup', (req, res) => {
   res.json({ username, password });
 });
 
-app.get('/api/info/movies/:query', (req, res) => {
-  const title = req.params.query;
-  getMovieByTitle(title)
-  .then(data => {
-   res.send(data);
-  })
-  .catch(() => res.sendStatus(404));
-});
+app.use('/api', api);
 
 app.get('/*', (req, res) => {
   res.sendStatus(404);
