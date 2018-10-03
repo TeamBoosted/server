@@ -8,7 +8,7 @@ module.exports.getMovieByTitle = (req, res) => {
     query,
     api_key
   };
-
+  console.log(`Hey we made it to the server!!!!`)
   get(url, { params })
   .then(response => {
     res.send(response.data.results);
