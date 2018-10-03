@@ -1,14 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const { getByTvTitle } = require('../api/tv.js');
-const { getMovieByTitle } = require('../api/movies.js')
+const { getByTvTitle, getTvRecc } = require('../api/tv.js');
+const { getMovieByTitle, getMovieRecc } = require('../api/movies.js');
 
 router
 .route('/info/tv/:query')
 .get(getByTvTitle);
 
 router
+.route('/rec/tv/:tvId')
+.get(getTvRecc);
+
+router
 .route('/info/movies/:query')
-.get(getMovieByTitle)
+.get(getMovieByTitle);
+
+router
+.route('/rec/movies/:movieId')
+.get(getMovieRecc);
 
 module.exports = router;
