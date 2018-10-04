@@ -6,7 +6,7 @@ describe('Loading Express', () => {
     server.close();
   });
 
-  it('should return 200 for home route /', (done) => {
+  xit('should return 200 for home route /', (done) => {
     request(server)
       .get('/')
       .expect(200)
