@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { getMovieByTitle } = require('./api/movies');
@@ -7,6 +8,8 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 80;
 const server = app.listen(PORT, () => console.log('started'));
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use((req, res, next) => {
   console.log('Req.url', req.url);
@@ -18,27 +21,14 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('hi');
-});
-
 app.get('/msg', (req, res) => {
   res.json({ what: 'up' });
 });
 
-app.post('/user/signup', (req, res) => {
-  let { username, password } = req.body;
-  if (!username || !password) {
-    return res.sendStatus(403);
-  }
-  username = username.toLowerCase();
-  res.json({ username, password });
-});
-
 app.use('/api', api);
 
-app.get('/*', (req, res) => {
-  res.sendStatus(404);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/'));
 });
 
 
