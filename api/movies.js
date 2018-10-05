@@ -27,7 +27,43 @@ module.exports.getMovieRecc = (req, res) => {
 
   get(url, { params })
   .then(response => {
-    res.send(response.data.results);
+    const data = response.data.results;
+    const formatted = formatData(data, 'movie');
+    res.send(formatted);
   })
   .catch(console.log);
 }
+
+// module.exports.getManyMovieReccs = (req, res) => {
+    // get 3n from db
+    
+    //foreach movieid.()
+//   console.log('movieIds', req.params);
+//   const movie_id0 = req.params.movieId0;
+//   const movie_id1 = req.params.movieId1;
+//   const movie_id2 = req.params.movieId2;
+//   // const url = `https://api.themoviedb.org/3/movie/${movie_id}/recommendations`;
+//   const params = {
+//     api_key
+//   };
+  
+//   Promise.all([
+//     get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
+//     get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
+//     get(`https://api.themoviedb.org/3/movie/${movie_id2}/recommendations`, { params })
+//   ]).then(data => {
+//     // console.log('response from promise all', response);
+//     const body = [];
+//     data.forEach(response => {
+//       const results = response.data.results;
+//       console.log('Response inside forEach', response);
+//       let formatted = formatData(data, 'movie');
+//       console.log('formatted data', formatted);
+//       body.push(formatted);
+//     })
+//     res.send(body);
+//   })
+//   .catch(console.log);
+
+//   // res.send(data);
+// }

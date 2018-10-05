@@ -1,5 +1,6 @@
 const { get } = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
+const { formatData } = require('../helpers/helper.js');
 
 
 module.exports.getByTvTitle = (req, res) => {
@@ -12,7 +13,9 @@ module.exports.getByTvTitle = (req, res) => {
   
   get(url, { params })
   .then(response => {
-    res.send(response.data.results);
+    const data = response.data.results;
+    const formatted = formatData(data, 'tv');
+    res.send(formatted);
   })
   .catch(console.log);
 }
@@ -26,7 +29,9 @@ module.exports.getTvRecc = (req, res) => {
 
   get(url, { params })
   .then(response => {
-    res.send(response.data.results);
+    const data = response.data.results;
+    const formatted = formatData(data, 'tv');
+    res.send(formatted);
   })
   .catch(console.log);
 }
