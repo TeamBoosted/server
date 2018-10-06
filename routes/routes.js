@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
-const { saveMediumToDb } = require('../api/db.js');
+const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
 
 //TV Routes
 router
@@ -29,5 +29,9 @@ router
 router
   .route('/db/addMedium')
   .post(saveMediumToDb);
+
+router
+  .route('/db/getLastThreeMedia')
+  .post(getLastThreeMedia);
 
 module.exports = router;
