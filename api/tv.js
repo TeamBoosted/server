@@ -31,7 +31,11 @@ module.exports.getTvRecc = (req, res) => {
   .then(response => {
     const data = response.data.results;
     const formatted = formatData(data, 'tv');
-    res.send(formatted);
+    const formatBody = [];
+    for(let i = 0; i < 5; i++) {
+      formatBody.push(formatted[i]);
+    }
+    res.send(formatBody);
   })
   .catch(console.log);
 }
