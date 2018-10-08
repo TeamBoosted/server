@@ -6,7 +6,7 @@ describe('Loading Express', () => {
     server.close();
   });
 
-  it('should return "hi"', (done) => {
+  xit('should return 200 for home route /', (done) => {
     request(server)
       .get('/')
       .expect(200)
@@ -24,7 +24,7 @@ describe('Loading Express', () => {
       .expect(200, done);
   });
 
-  it('should return user object', (done) => {
+  xit('should return user object', (done) => {
     request(server)
       .post('/user/signup')
       .send('username=JOHN&password=password')
@@ -40,7 +40,7 @@ describe('Loading Express', () => {
       }, done);
   });
 
-  it('should send Bad Request 403 for falsy sign up inputs', (done) => {
+  xit('should send Bad Request 403 for falsy sign up inputs', (done) => {
     request(server)
       .post('/user/signup')
       .send('username=')
@@ -49,7 +49,7 @@ describe('Loading Express', () => {
       .expect(403, done);
   });
 
-  it('should return 404 for everything else', (done) => {
+  xit('should return 404 for everything else', (done) => {
     request(server)
       .get('/hi')
       .expect(404, done);
