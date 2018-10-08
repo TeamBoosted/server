@@ -8,8 +8,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 80;
 const server = app.listen(PORT, () => console.log('started'));
-
-app.use(express.static(path.join(__dirname, process.env.CLIENT_FOLDER)));
+app.use(express.static(path.join(__dirname, process.env.CLIENT_FOLDER || '../client/dist')));
 
 app.use((req, res, next) => {
   console.log('Req.url', req.url);
