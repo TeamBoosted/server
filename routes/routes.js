@@ -12,18 +12,19 @@ router
 router
   .route('/rec/tv/:tvId')
   .get(getTvRecc);
+  
 //Movie Routes
 router
   .route('/info/movies/:query')
   .get(getMovieByTitle);
 
 router
+  .route('/rec/manyMovies/:movieId0&:movieId1&:movieId2')
+  .get(getManyMovieReccs)
+
+router
   .route('/rec/movies/:movieId')
   .get(getMovieRecc);
-
-// router
-//   .route('/rec/movies/:movieId0&:movieId1&:movieId2')
-//   .get(getManyMovieReccs)
 
 //DB Routes
 router
