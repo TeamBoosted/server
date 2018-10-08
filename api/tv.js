@@ -10,14 +10,14 @@ module.exports.getByTvTitle = (req, res) => {
     query,
     api_key
   };
-  
+
   get(url, { params })
-  .then(response => {
-    const data = response.data.results;
-    const formatted = formatData(data, 'tv');
-    res.send(formatted);
-  })
-  .catch(console.log);
+    .then(response => {
+      const data = response.data.results;
+      const formatted = formatData(data, 'tv');
+      res.send(formatted);
+    })
+    .catch(console.log);
 }
 
 module.exports.getTvRecc = (req, res) => {
@@ -28,14 +28,14 @@ module.exports.getTvRecc = (req, res) => {
   };
 
   get(url, { params })
-  .then(response => {
-    const data = response.data.results;
-    const formatted = formatData(data, 'tv');
-    const formatBody = [];
-    for(let i = 0; i < 5; i++) {
-      formatBody.push(formatted[i]);
-    }
-    res.send(formatBody);
-  })
-  .catch(console.log);
+    .then(response => {
+      const data = response.data.results;
+      const formatted = formatData(data, 'tv');
+      const formatBody = [];
+      for (let i = 0; i < 5; i++) {
+        formatBody.push(formatted[i]);
+      }
+      res.send(formatBody);
+    })
+    .catch(console.log);
 }

@@ -1,4 +1,4 @@
-const { get }  = require('axios');
+const { get } = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
 const { formatData } = require('../helpers/helper.js');
 
@@ -10,12 +10,12 @@ module.exports.getMovieByTitle = (req, res) => {
     api_key
   };
   get(url, { params })
-  .then(response => {
-    const data = response.data.results;
-    const formatted = formatData(data, 'movie');
-    res.send(formatted);
-  })
-  .catch(console.log);
+    .then(response => {
+      const data = response.data.results;
+      const formatted = formatData(data, 'movie');
+      res.send(formatted);
+    })
+    .catch(console.log);
 }
 
 module.exports.getMovieRecc = (req, res) => {
@@ -26,21 +26,21 @@ module.exports.getMovieRecc = (req, res) => {
   };
 
   get(url, { params })
-  .then(response => {
-    const data = response.data.results;
-    const formatted = formatData(data, 'movie');
-    const formatBody = [];
-    for (let i = 0; i < 5; i++) {
-      formatBody.push(formatted[i]);
-    }
-    res.send(formatBody);
-  })
-  .catch(console.log);
+    .then(response => {
+      const data = response.data.results;
+      const formatted = formatData(data, 'movie');
+      const formatBody = [];
+      for (let i = 0; i < 5; i++) {
+        formatBody.push(formatted[i]);
+      }
+      res.send(formatBody);
+    })
+    .catch(console.log);
 }
 
 // module.exports.getManyMovieReccs = (req, res) => {
     // get 3n from db
-    
+
     //foreach movieid.()
 //   console.log('movieIds', req.params);
 //   const movie_id0 = req.params.movieId0;
@@ -50,7 +50,7 @@ module.exports.getMovieRecc = (req, res) => {
 //   const params = {
 //     api_key
 //   };
-  
+
 //   Promise.all([
 //     get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
 //     get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
