@@ -14,3 +14,15 @@ module.exports.formatData = (res, type) => {
   })
   return formatted;
 } 
+
+module.exports.limitToFive = (array) => {
+  const limitted = [];
+  for(let i = 0; i < 5; i++) {
+    limitted.push(array[i]);
+  }
+  return limitted;
+}
+
+module.exports.formatUrl = (arr) => {
+  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${arr[2].moviedb_id}`;
+}

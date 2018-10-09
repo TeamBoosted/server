@@ -1,4 +1,4 @@
-const { get } = require('axios');
+const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
 const { formatData } = require('../helpers/helper.js');
 
@@ -11,7 +11,8 @@ module.exports.getByTvTitle = (req, res) => {
     api_key
   };
 
-  get(url, { params })
+  axios
+    .get(url, { params })
     .then(response => {
       const data = response.data.results;
       const formatted = formatData(data, 'tv');
@@ -27,11 +28,16 @@ module.exports.getTvRecc = (req, res) => {
     api_key
   };
 
-  get(url, { params })
+  axios
+    .get(url, { params })
     .then(response => {
       const data = response.data.results;
       const formatted = formatData(data, 'tv');
-      res.send(formatted);
+      const formatBody = [];
+      for (let i = 0; i < 5; i++) {
+        formatBody.push(formatted[i]);
+      }
+      res.send(formatBody);
     })
     .catch(console.log);
 }
