@@ -4,6 +4,9 @@ const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
 const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
 
+
+client.on('error', console.log);
+
 //TV Routes
 router
   .route('/info/tv/:query')
