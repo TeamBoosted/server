@@ -5,17 +5,6 @@ describe('Loading Express', () => {
   afterEach(function () {
     server.close();
   });
-
-  xit('should return 200 for home route /', (done) => {
-    request(server)
-      .get('/')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        done();
-      })
-  });
-
   it('should get json', (done) => {
     request(server)
       .get('/msg')
@@ -24,34 +13,4 @@ describe('Loading Express', () => {
       .expect(200, done);
   });
 
-  xit('should return user object', (done) => {
-    request(server)
-      .post('/user/signup')
-      .send('username=JOHN&password=password')
-      .set('Accept', 'application/json')
-      // Change the data
-      .expect(res => {
-        res.body.id = 'the fixed id';
-      })
-      .expect(200, {
-        id: 'the fixed id',
-        username: 'john',
-        password: 'password'
-      }, done);
-  });
-
-  xit('should send Bad Request 403 for falsy sign up inputs', (done) => {
-    request(server)
-      .post('/user/signup')
-      .send('username=')
-      .send('password=null')
-      .set('Accept', 'application/json')
-      .expect(403, done);
-  });
-
-  xit('should return 404 for everything else', (done) => {
-    request(server)
-      .get('/hi')
-      .expect(404, done);
-  });
 });
