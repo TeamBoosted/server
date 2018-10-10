@@ -17,6 +17,9 @@ module.exports.formatData = (res, type) => {
 
 module.exports.limitToFive = (array) => {
   const limitted = [];
+  if (array.length < 5) {
+    return [...array];
+  } 
   for(let i = 0; i < 5; i++) {
     limitted.push(array[i]);
   }
