@@ -3,6 +3,12 @@ const router = express.Router();
 const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
 const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
+const redis = require('redis');
+const bluebird = require('bluebird');
+bluebird.promisifyAll(redis);
+const client = redis.createClient();
+
+client.on('error', console.log);
 
 //TV Routes
 router
