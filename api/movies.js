@@ -4,7 +4,11 @@ const { formatData, limitToFive } = require('../helpers/helper.js');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
-const client = redis.createClient();
+const client = redis.createClient({
+  port: process.env.REDIS_PORT,
+  host: process.env.REDIS_URL,
+  password: process.env.REDIS_PASS
+});
 
 module.exports.getMovieByTitle = (req, res) => {
   const url = 'https://api.themoviedb.org/3/search/movie';
