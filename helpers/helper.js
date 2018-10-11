@@ -13,11 +13,11 @@ module.exports.formatData = (res, type) => {
     })
   })
   return formatted;
-} 
+}
 
 module.exports.limitToFive = (array) => {
   const limitted = [];
-  for(let i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     limitted.push(array[i]);
   }
   return limitted;
