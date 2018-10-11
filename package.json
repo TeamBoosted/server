@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --timeout 10000",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "back": "node index.js"
   },
   "repository": {
     "type": "git",
