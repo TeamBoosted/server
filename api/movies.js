@@ -19,9 +19,9 @@ module.exports.getMovieByTitle = (req, res) => {
   };
   client.getAsync(query)
     .then(response => {
-      if(!response) {
+      if (!response) {
         axios
-        .get(url, { params })
+          .get(url, { params })
           .then(response => {
             const data = response.data.results;
             const formatted = formatData(data, 'movie');
@@ -33,7 +33,6 @@ module.exports.getMovieByTitle = (req, res) => {
       }
     })
     .catch(console.log);
-  
 }
 
 module.exports.getMovieRecc = (req, res) => {
@@ -46,9 +45,9 @@ module.exports.getMovieRecc = (req, res) => {
   client.getAsync(movie_id)
     .then(response => {
       console.log('movieRec redis store', response);
-      if(!response) {
+      if (!response) {
         axios
-        .get(url, { params })
+          .get(url, { params })
           .then(response => {
             const data = response.data.results;
             const limittedData = limitToFive(data);
@@ -62,7 +61,6 @@ module.exports.getMovieRecc = (req, res) => {
     })
     .catch(console.log);
 
- 
 }
 
 module.exports.getManyMovieReccs = (req, res) => {
