@@ -45,7 +45,6 @@ module.exports.getMovieRecc = (req, res) => {
 
   client.getAsync(movie_id)
     .then(response => {
-      console.log('movieRec redis store', response);
       if(!response) {
         axios
         .get(url, { params })
