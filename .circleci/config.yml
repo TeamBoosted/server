@@ -20,17 +20,17 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-        name: login-docker
-        command: docker login -u $DOCKER_USER --password $DOCKER_PASS
+          name: login-docker
+          command: docker login -u $DOCKER_USER --password $DOCKER_PASS
       - run:
-        name: docker-pull-last
-        command: docker pull $DOCKER_USER/teamboosted-server:latest
+          name: docker-pull-last
+          command: docker pull $DOCKER_USER/teamboosted-server:latest
       - run:
-        name: build-docker-image
-        command: docker build -t $DOCKER_USER/teamboosted-server .
+          name: build-docker-image
+          command: docker build -t $DOCKER_USER/teamboosted-server .
       - run:
-        name: push-docker-image
-        command: docker image push $DOCKER_USER/teamboosted-server:latest
+          name: push-docker-image
+          command: docker image push $DOCKER_USER/teamboosted-server:latest
       # Download and cache dependencies
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "package.json" }}
