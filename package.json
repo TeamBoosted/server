@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --timeout 10000",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "back": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,12 @@
   "homepage": "https://github.com/TeamBoosted/server#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",
