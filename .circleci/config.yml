@@ -37,9 +37,9 @@ jobs:
       - run:
           name: login-docker
           command: docker login -u $DOCKER_USER --password $DOCKER_PASS
-      # - run:
-      #     name: docker-pull-last
-      #     command: docker pull $DOCKER_USER/teamboosted-server:latest
+      - run:
+          name: docker-pull-last
+          command: docker pull $DOCKER_USER/teamboosted-server:latest
       - run:
           name: build-docker-image
           command: docker build -t $DOCKER_USER/teamboosted-server .
@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd ~/TeamBoosted/server && git pull origin master && ./rebuild.sh"
+            ssh $SSH_USER@$SSH_HOST "cd ~/TeamBoosted/server && wget https://raw.githubusercontent.com/TeamBoosted/server/dev/rebuild.sh -O rebuild.sh && ./rebuild.sh"
 workflows:
   version: 2
   build-and-deploy:
