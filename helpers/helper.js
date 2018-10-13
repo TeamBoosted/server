@@ -1,9 +1,11 @@
 module.exports.formatData = (res, type) => {
   const formatted = [];
   res.map(i => {
+    console.log('what is the poster path?',i.poster_path)
+    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
       title: i.title,
-      image: i.poster_path,
+      image:  theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
       popularity: i.popularity,
@@ -14,6 +16,28 @@ module.exports.formatData = (res, type) => {
   })
   return formatted;
 }
+
+module.exports.formatBooks = (res, type) => {
+  const formatted = [];
+  res.map(i => {
+    return formatted.push({
+      title: i.best_book.title,
+      author: 'null',
+      image: i.best_book.image_url,
+      rating: i.average_rating,
+      ratingsCount: i.ratings_count.$t,
+      publicationYear: i.original_publication_year.$t,
+      type: 'book'
+    })
+  })
+  return formatted;
+}
+
+// let author = parsedData.GoodreadsResponse.search.results.work[i].best_book.author.name
+//     let image = parsedData.GoodreadsResponse.search.results.work[i].best_book.image_url
+//     let rating = parsedData.GoodreadsResponse.search.results.work[i].average_rating
+//     let ratingsCount = parsedData.GoodreadsResponse.search.results.work[i].ratings_count.$t
+//     let publicationYear = parsedData.GoodreadsResponse.search.results.work[i].original_publication_year.$t
 
 module.exports.limitToFive = (array) => {
   const limitted = [];

@@ -27,10 +27,10 @@ router
   .route('/rec/movies/:movieId')
   .get(getMovieRecc);
 
-  //Book Routes
-// router
-//   .route('/info/books/:query')
-//   .get(getBooksByTitle);
+  // Book Routes
+router
+  .route('/info/books/:query')
+  .get(getBooksByTitle);
   
 
 //DB Routes

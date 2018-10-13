@@ -28,6 +28,7 @@ module.exports.getMovieByTitle = (req, res) => {
             client.set(query, JSON.stringify(formatted));
             res.send(formatted);
           })
+          .catch(console.log)
       } else {
         res.send(response);
       }
