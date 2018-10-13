@@ -17,6 +17,7 @@ module.exports.getMovieByTitle = (req, res) => {
     query,
     api_key
   };
+  
   client.getAsync(query)
     .then(response => {
       if(!response) {
