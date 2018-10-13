@@ -17,12 +17,12 @@ module.exports.getMovieByTitle = (req, res) => {
     query,
     api_key
   };
-  
+
   client.getAsync(query)
     .then(response => {
-      if(!response) {
+      if (!response) {
         axios
-        .get(url, { params })
+          .get(url, { params })
           .then(response => {
             const data = response.data.results;
             const formatted = formatData(data, 'movie');
@@ -34,7 +34,6 @@ module.exports.getMovieByTitle = (req, res) => {
       }
     })
     .catch(console.log);
-  
 }
 
 module.exports.getMovieRecc = (req, res) => {
@@ -48,7 +47,7 @@ module.exports.getMovieRecc = (req, res) => {
     .then(response => {
       if(!response) {
         axios
-        .get(url, { params })
+          .get(url, { params })
           .then(response => {
             const data = response.data.results;
             const limittedData = limitToFive(data);
@@ -62,7 +61,6 @@ module.exports.getMovieRecc = (req, res) => {
     })
     .catch(console.log);
 
- 
 }
 
 module.exports.getManyMovieReccs = (req, res) => {

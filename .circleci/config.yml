@@ -32,6 +32,20 @@ jobs:
         
       # run tests!
       #- run: npm test
+
+      - setup_remote_docker
+      - run:
+          name: login-docker
+          command: docker login -u $DOCKER_USER --password $DOCKER_PASS
+      - run:
+          name: docker-pull-last
+          command: docker pull $DOCKER_USER/teamboosted-server:latest
+      - run:
+          name: build-docker-image
+          command: docker build -t $DOCKER_USER/teamboosted-server .
+      - run:
+          name: push-docker-image
+          command: docker image push $DOCKER_USER/teamboosted-server:latest
     
   deploy:
     machine:
@@ -40,7 +54,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd ~/TeamBoosted/server && git pull origin master && ./rebuild.sh"
+            ssh $SSH_USER@$SSH_HOST "cd ~/TeamBoosted/server && wget https://raw.githubusercontent.com/TeamBoosted/server/master/rebuild.sh -O rebuild.sh && chmod +x rebuild.sh && ./rebuild.sh"
 workflows:
   version: 2
   build-and-deploy:
