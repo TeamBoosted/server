@@ -1,7 +1,7 @@
 module.exports.formatData = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('what is the poster path?',i.poster_path)
+    console.log('what is the poster path?',i)
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
       title: i.title,
@@ -16,6 +16,26 @@ module.exports.formatData = (res, type) => {
   })
   return formatted;
 }
+
+module.exports.formatTV = (res, type) => {
+  const formatted = [];
+  res.map(i => {
+    console.log('what is the poster path?',i)
+    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
+    return formatted.push({
+      title: i.name,
+      image:  theImage,
+      synopsis: i.overview,
+      moviedb_id: i.id,
+      popularity: i.popularity,
+      vote_avg: i.vote_average,
+      vote_count: i.vote_count,
+      type
+    })
+  })
+  return formatted;
+}
+
 
 module.exports.formatBooks = (res, type) => {
   const formatted = [];

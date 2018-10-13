@@ -23,6 +23,8 @@ module.exports.getBooksByTitle =  (req, res) => {
         let parsedData = parser.toJson(data.data)
         parsedData =  JSON.parse(parsedData)
         arrayOfBooks = parsedData.GoodreadsResponse.search.results.work
+        console.log('------->',arrayOfBooks)
+
         const formatted = formatBooks(arrayOfBooks)
         res.send(formatted)
       })
