@@ -3,6 +3,7 @@ const router = express.Router();
 const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
 const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
+const {getBooksByTitle} = require('../api/books.js')
 
 //TV Routes
 router
@@ -25,6 +26,12 @@ router
 router
   .route('/rec/movies/:movieId')
   .get(getMovieRecc);
+
+  //Book Routes
+// router
+//   .route('/info/books/:query')
+//   .get(getBooksByTitle);
+  
 
 //DB Routes
 router
