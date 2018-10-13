@@ -7,6 +7,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 80;
 const server = app.listen(PORT, () => console.log('started'));
+
 app.use(express.static(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist')));
 
 app.use((req, res, next) => {
