@@ -11,6 +11,7 @@ module.exports.formatData = (res, type) => {
       popularity: i.popularity,
       vote_avg: i.vote_average,
       vote_count: i.vote_count,
+      genre_id: i.genre_ids,
       type
     })
   })
