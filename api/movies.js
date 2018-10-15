@@ -29,6 +29,7 @@ module.exports.getMovieByTitle = (req, res) => {
             client.set(query, JSON.stringify(formatted));
             res.send(formatted);
           })
+          .catch(console.log)
       } else {
         res.send(response);
       }
@@ -51,6 +52,7 @@ module.exports.getMovieRecc = (req, res) => {
           .then(response => {
             const data = response.data.results;
             const limittedData = limitToFive(data);
+            console.log('--------\n\n\nHERE IS LIMITTEDDATA:',limittedData)
             const formatted = formatData(limittedData, 'movie');
             client.set(movie_id, JSON.stringify(formatted));
             res.send(formatted);

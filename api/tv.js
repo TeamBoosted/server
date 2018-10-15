@@ -1,6 +1,6 @@
 const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
-const { formatData } = require('../helpers/helper.js');
+const { formatData, formatTV } = require('../helpers/helper.js');
 
 
 module.exports.getByTvTitle = (req, res) => {
@@ -32,7 +32,9 @@ module.exports.getTvRecc = (req, res) => {
     .get(url, { params })
     .then(response => {
       const data = response.data.results;
-      const formatted = formatData(data, 'tv');
+      const formatted = formatTV(data, 'tv');
+      console.log('WHAT IS THE TV RECCCC DATA',formatted)
+
       const formatBody = [];
       for (let i = 0; i < 5; i++) {
         formatBody.push(formatted[i]);
