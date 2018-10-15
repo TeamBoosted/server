@@ -52,7 +52,6 @@ module.exports.getMovieRecc = (req, res) => {
           .then(response => {
             const data = response.data.results;
             const limittedData = limitToFive(data);
-            console.log('--------\n\n\nHERE IS LIMITTEDDATA:',limittedData)
             const formatted = formatData(limittedData, 'movie');
             client.set(movie_id, JSON.stringify(formatted));
             res.send(formatted);
@@ -75,6 +74,7 @@ module.exports.getManyMovieReccs = (req, res) => {
   };
   client.mgetAsync(movie_id0, movie_id1, movie_id2)
     .then(response => {
+      console.log('redis',response)
       response.forEach(data => {
         let parsed = JSON.parse(data);
         body.push(parsed);
