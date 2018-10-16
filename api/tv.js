@@ -54,7 +54,6 @@ module.exports.tvRecByGenre = async (req, res) => {
  
   try {
     const response = await axios.get(url, { params })
-    console.log('----------\nGetting response from discover\n----------\n', response);
     const formatted = formatData(response.data.results, 'tv');
     res.send(formatted);
   } catch (err) {
