@@ -11,6 +11,7 @@ const client = redis.createClient({
 });
 var parseString = require('xml2js').parseString;
 const { formatBooks } = require('../helpers/helper.js');
+const url = process.env.DB_URL || 'http://localhost:8081';
 
 
 module.exports.getBooksByTitle = (req, res) => {
@@ -34,7 +35,7 @@ module.exports.getBooksByTitle = (req, res) => {
 module.exports.getBookRecsByGenre = async (req, res) => {
   const { genre_id } = req.params;
   try {
-    let bookData = await axios.get(`http://localhost:8081/db/getBookRecsByGenre/${genre_id}`);
+    let bookData = await axios.get(`${url}/db/getBookRecsByGenre/${genre_id}`);
     const body = [];
     const random = (limit) => {
       return Math.floor(Math.random() * (limit));
