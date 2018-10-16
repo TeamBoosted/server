@@ -3,7 +3,7 @@ const router = express.Router();
 const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
 const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
-const {getBooksByTitle} = require('../api/books.js')
+const { getBooksByTitle, getBookRecsByGenre } = require('../api/books.js')
 
 //TV Routes
 router
@@ -13,7 +13,7 @@ router
 router
   .route('/rec/tv/:tvId')
   .get(getTvRecc);
-  
+
 //Movie Routes
 router
   .route('/info/movies/:query')
@@ -27,11 +27,14 @@ router
   .route('/rec/movies/:movieId')
   .get(getMovieRecc);
 
-  // Book Routes
+// Book Routes
 router
   .route('/info/books/:query')
   .get(getBooksByTitle);
-  
+
+router
+  .route('/db/getBookRecsByGenre/:genre_id')
+  .get(getBookRecsByGenre);
 
 //DB Routes
 router
@@ -42,7 +45,7 @@ router
   .route('/db/getLastThreeMedia')
   .post(getLastThreeMedia);
 
-  //WatsonRoutes
+//WatsonRoutes
 //?  
 
 module.exports = router;
