@@ -1,10 +1,20 @@
+const limitToFive = (array) => {
+  const limitted = [];
+  if (array.length < 5) {
+    return [...array];
+  }
+  for (let i = 0; i < 5; i++) {
+    limitted.push(array[i]);
+  }
+  return limitted;
+}
+
 module.exports.formatData = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('This being formatted',i)
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
-      title: i.title,
+      title: i.title || i.name,
       image:  theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
@@ -15,13 +25,13 @@ module.exports.formatData = (res, type) => {
       type
     })
   })
-  return formatted;
+  const data = limitToFive(formatted)
+  return data;
 }
 
 module.exports.formatTV = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('this is being formatted',i)
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
       title: i.name,
@@ -34,7 +44,8 @@ module.exports.formatTV = (res, type) => {
       type
     })
   })
-  return formatted;
+  const data = limitToFive(formatted)
+  return data;
 }
 
 
@@ -51,7 +62,8 @@ module.exports.formatBooks = (res, type) => {
       type: 'book'
     })
   })
-  return formatted;
+  const data = limitToFive(formatted)
+  return data;
 }
 
 // let author = parsedData.GoodreadsResponse.search.results.work[i].best_book.author.name
@@ -60,16 +72,6 @@ module.exports.formatBooks = (res, type) => {
 //     let ratingsCount = parsedData.GoodreadsResponse.search.results.work[i].ratings_count.$t
 //     let publicationYear = parsedData.GoodreadsResponse.search.results.work[i].original_publication_year.$t
 
-module.exports.limitToFive = (array) => {
-  const limitted = [];
-  if (array.length < 5) {
-    return [...array];
-  }
-  for (let i = 0; i < 5; i++) {
-    limitted.push(array[i]);
-  }
-  return limitted;
-}
 
 module.exports.formatUrl = (arr) => {
   return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${arr[2].moviedb_id}`;
@@ -89,5 +91,7 @@ module.exports.formatBookData = (res, type) => {
       type
     })
   })
-  return formatted;
+  const data = limitToFive(formatted)
+  return data;
 }
+
