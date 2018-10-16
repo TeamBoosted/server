@@ -27,7 +27,7 @@ app.get('/msg', (req, res) => {
 app.use('/api', api);
 
 app.get('*', (req, res) => {
-  res.sendFile(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/'));
+  res.sendFile(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist'));
 });
 
 

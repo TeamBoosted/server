@@ -1,11 +1,11 @@
 module.exports.formatData = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('This being formatted',i)
+    console.log('This being formatted', i)
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
       title: i.title,
-      image:  theImage,
+      image: theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
       popularity: i.popularity,
@@ -21,11 +21,11 @@ module.exports.formatData = (res, type) => {
 module.exports.formatTV = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('this is being formatted',i)
+    console.log('this is being formatted', i)
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
       title: i.name,
-      image:  theImage,
+      image: theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
       popularity: i.popularity,
@@ -42,12 +42,12 @@ module.exports.formatBooks = (res, type) => {
   const formatted = [];
   res.map(i => {
     return formatted.push({
-      title: i.best_book.title,
-      author: 'null',
-      image: i.best_book.image_url,
-      rating: i.average_rating,
-      ratingsCount: i.ratings_count.$t,
-      publicationYear: i.original_publication_year.$t,
+      title: i.best_book[0].title[0],
+      author: i.best_book[0].author[0].name[0],
+      image: i.best_book[0].image_url[0],
+      rating: i.average_rating[0],
+      ratingsCount: i.ratings_count[0]._,
+      publicationYear: i.original_publication_year[0]._,
       type: 'book'
     })
   })
