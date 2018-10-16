@@ -14,7 +14,6 @@ const { formatBooks } = require('../helpers/helper.js');
 
 
 module.exports.getBooksByTitle = (req, res) => {
-  console.log('here I am! in the getBooks request!', req.params)
   let title = req.params.query
   axios
     .get(`https://www.goodreads.com/search/index.xml?key=${api_key}&q=${title}`)
@@ -36,7 +35,14 @@ module.exports.getBookRecsByGenre = async (req, res) => {
   const { genre_id } = req.params;
   try {
     let bookData = await axios.get(`http://localhost:8081/db/getBookRecsByGenre/${genre_id}`);
-    res.json(bookData.data);
+    const body = [];
+    const random = (limit) => {
+      return Math.floor(Math.random() * (limit));
+    }
+    const len = bookData.data.length;
+    body.push(bookData.data[random(len)]);
+    body.push(bookData.data[random(len)]);
+    res.send(body);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
