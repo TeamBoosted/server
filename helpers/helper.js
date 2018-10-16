@@ -1,9 +1,9 @@
-const limitToFive = (array) => {
+const limitToTwo = (array) => {
   const limitted = [];
-  if (array.length < 5) {
+  if (array.length <= 2) {
     return [...array];
   }
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 2; i++) {
     limitted.push(array[i]);
   }
   return limitted;
@@ -25,7 +25,7 @@ module.exports.formatData = (res, type) => {
       type
     })
   })
-  const data = limitToFive(formatted)
+  const data = limitToTwo(formatted)
   return data;
 }
 
@@ -44,7 +44,7 @@ module.exports.formatTV = (res, type) => {
       type
     })
   })
-  const data = limitToFive(formatted)
+  const data = limitToTwo(formatted)
   return data;
 }
 
@@ -62,7 +62,7 @@ module.exports.formatBooks = (res, type) => {
       type: 'book'
     })
   })
-  const data = limitToFive(formatted)
+  const data = limitToTwo(formatted)
   return data;
 }
 
@@ -91,7 +91,7 @@ module.exports.formatBookData = (res, type) => {
       type
     })
   })
-  const data = limitToFive(formatted)
+  const data = limitToTwo(formatted)
   return data;
 }
 

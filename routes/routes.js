@@ -31,7 +31,7 @@ router
   .get(getMovieRecc);
 
 router
-  .route('/rec/movie/genre/:genreId')
+  .route('/rec/movies/genre/:genreId')
   .get(movieRecByGenre);
 
 // Book Routes
