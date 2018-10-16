@@ -28,11 +28,19 @@ module.exports.saveMediumToDb = (req, res) => {
 module.exports.getLastThreeMedia = (req, res) => {
   const id_token = req.body.data.id_token;
   axios
-    .post("http://localhost:8081/db/getLastThreeMedia", { id_token })
-    .then(data => {
-      const url = formatUrl(data.data);
-      axios.get(url).then(response => {
-        res.send(response.data);
+    .post('http://localhost:8081/db/getLastThreeMedia', { id_token })
+      .then(data => {
+        const url = formatUrl(data.data);
+        axios
+          .get(url)
+            .then(response => {
+              console.log('respose from LastThreeMedia', response);
+              res.send(response.data);
+            })
+      })
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(500);
       });
     })
     .catch(err => {

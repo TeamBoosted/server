@@ -1,6 +1,6 @@
 const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
-const { formatData, limitToFive } = require('../helpers/helper.js');
+const { formatData } = require('../helpers/helper.js');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -24,8 +24,7 @@ module.exports.getMovieByTitle = (req, res) => {
         axios
           .get(url, { params })
           .then(response => {
-            const data = response.data.results;
-            const formatted = formatData(data, 'movie');
+            const formatted = formatData(response.data.results, 'movie');
             client.set(query, JSON.stringify(formatted));
             res.send(formatted);
           })
@@ -38,22 +37,20 @@ module.exports.getMovieByTitle = (req, res) => {
 }
 
 module.exports.getMovieRecc = (req, res) => {
-  const movie_id = req.params.movieId;
-  const url = `https://api.themoviedb.org/3/movie/${movie_id}/recommendations`;
+  const { movieId } = req.params;
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations`;
   const params = {
     api_key
   };
 
-  client.getAsync(movie_id)
+  client.getAsync(movieId)
     .then(response => {
       if(!response) {
         axios
           .get(url, { params })
           .then(response => {
-            const data = response.data.results;
-            const limittedData = limitToFive(data);
-            const formatted = formatData(limittedData, 'movie');
-            client.set(movie_id, JSON.stringify(formatted));
+            const formatted = formatData(response.data.results, 'movie');
+            client.set(movieId, JSON.stringify(formatted));
             res.send(formatted);
           })
       } else {
@@ -65,23 +62,24 @@ module.exports.getMovieRecc = (req, res) => {
 }
 
 module.exports.getManyMovieReccs = (req, res) => {
-  const movie_id0 = req.params.movieId0;
-  const movie_id1 = req.params.movieId1;
-  const movie_id2 = req.params.movieId2;
+  const { movieId0, movieId1, movieId2 } = req.params;
   const body = [];
   const params = {
     api_key
   };
-  client.mgetAsync(movie_id0, movie_id1, movie_id2)
+  client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
       console.log('redis',response)
       response.forEach(data => {
-        let parsed = JSON.parse(data);
-        body.push(parsed);
+        if(data) {
+          let parsed = JSON.parse(data);
+          body.push(parsed);
+        }
       })
       res.send(body);
     })
     .catch(console.log);
+  }
   // Promise.all([
   //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
   //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
@@ -97,4 +95,25 @@ module.exports.getManyMovieReccs = (req, res) => {
   //   res.send(body);
   // })
   // .catch(console.log);
-}
+
+  module.exports.movieRecByGenre = async (req, res) => {
+    const { genreId } = req.params;
+    const url = 'https://api.themoviedb.org/3/discover/movie';
+    const params = {
+      with_genres: `${genreId}`,
+      page: '1',
+      include_video: 'false',
+      include_adult: 'false',
+      sort_by: 'popularity.desc',
+      language: 'en-US',
+      api_key
+    }
+    try {
+      const response = await axios.get(url, { params })
+      console.log('----------\nGetting response from discover\n----------\n', response);
+      const formatted = formatData(response.data.results, 'movie');
+      res.send(formatted);
+    } catch (err) {
+      console.log(err);
+    }
+  }
