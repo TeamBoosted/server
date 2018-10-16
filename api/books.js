@@ -9,27 +9,39 @@ const client = redis.createClient({
   host: process.env.REDIS_URL,
   password: process.env.REDIS_PASS
 });
-var parser = require('xml2json');
+var parseString = require('xml2js').parseString;
 const { formatBooks } = require('../helpers/helper.js');
 
 
-module.exports.getBooksByTitle =  (req, res) => {
-  console.log('here I am! in the getBooks request!',req.params)
+module.exports.getBooksByTitle = (req, res) => {
+  console.log('here I am! in the getBooks request!', req.params)
   let title = req.params.query
   axios
     .get(`https://www.goodreads.com/search/index.xml?key=${api_key}&q=${title}`)
-      .then(data => {
-
-        let parsedData = parser.toJson(data.data)
-        parsedData =  JSON.parse(parsedData)
-        arrayOfBooks = parsedData.GoodreadsResponse.search.results.work
-        console.log('------->',arrayOfBooks)
-
-        const formatted = formatBooks(arrayOfBooks)
-        res.send(formatted)
+    .then(data => {
+      parseString(data.data, function (err, parsedData) {
+        if (err) return console.log(err);
+        arrayOfBooks = parsedData.GoodreadsResponse.search[0].results[0].work;
+        const formatted = formatBooks(arrayOfBooks);
+        res.json(formatted);
       })
-      .catch(console.log)
-}
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    })
+};
+
+module.exports.getBookRecsByGenre = async (req, res) => {
+  const { genre_id } = req.params;
+  try {
+    let bookData = await axios.get(`http://localhost:8081/db/getBookRecsByGenre/${genre_id}`);
+    res.json(bookData.data);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+};
 
 // app.post('/books', function (req,res) {
 //   let title = req.body.title
@@ -37,8 +49,8 @@ module.exports.getBooksByTitle =  (req, res) => {
 //   const options = {
 //     method: 'GET',
 //     uri:`https://www.goodreads.com/search/index.xml?key=uSG8wKoxG3f65Jv5iClwA&q=${title}`
-    
-    
+
+
 //   }
 
 //   request(options, function (err,response,body){
@@ -62,11 +74,11 @@ module.exports.getBooksByTitle =  (req, res) => {
 //         let rating = theBod.GoodreadsResponse.search.results.work[i].average_rating
 //         let ratingsCount = theBod.GoodreadsResponse.search.results.work[i].ratings_count.$t
 //         let publicationYear = theBod.GoodreadsResponse.search.results.work[i].original_publication_year.$t
-      
-      
+
+
 //         insert(apiTitle, apiAuthor, infoLink, categories, image, rating, ratingsCount, publicationYear, function(err,data) {
 //           if(err) {
-            
+
 //             console.log('DB-SERVER FAILED',err)
 //             // res.status(500).send('DB SERVER FAILED',err)
 //           } else {
