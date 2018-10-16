@@ -4,6 +4,7 @@ const { getByTvTitle, getTvRecc } = require('../api/tv.js');
 const { getMovieByTitle, getMovieRecc, getManyMovieReccs } = require('../api/movies.js');
 const { saveMediumToDb, getLastThreeMedia } = require('../api/db.js');
 const {getBooksByTitle} = require('../api/books.js')
+const {getPersonality} = require('../api/watson.js')
 
 //TV Routes
 router
@@ -44,5 +45,8 @@ router
 
   //WatsonRoutes
 //?  
+router 
+  .route('/watson/getPersonality')
+  .post(getPersonality)
 
 module.exports = router;

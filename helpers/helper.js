@@ -1,11 +1,13 @@
 module.exports.formatData = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('This being formatted',i)
-    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
+    console.log("This being formatted", i);
+    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${
+      i.poster_path
+    }`;
     return formatted.push({
       title: i.title,
-      image:  theImage,
+      image: theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
       popularity: i.popularity,
@@ -13,46 +15,48 @@ module.exports.formatData = (res, type) => {
       vote_count: i.vote_count,
       genre_id: i.genre_ids,
       type
-    })
-  })
+    });
+  });
   return formatted;
-}
+};
 
 module.exports.formatTV = (res, type) => {
   const formatted = [];
   res.map(i => {
-    console.log('this is being formatted',i)
-    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
+    console.log("this is being formatted", i);
+    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${
+      i.poster_path
+    }`;
     return formatted.push({
       title: i.name,
-      image:  theImage,
+      image: theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
       popularity: i.popularity,
       vote_avg: i.vote_average,
       vote_count: i.vote_count,
+      genre_id: i.genre_ids,
       type
-    })
-  })
+    });
+  });
   return formatted;
-}
-
+};
 
 module.exports.formatBooks = (res, type) => {
   const formatted = [];
   res.map(i => {
     return formatted.push({
       title: i.best_book.title,
-      author: 'null',
+      author: "null",
       image: i.best_book.image_url,
       rating: i.average_rating,
       ratingsCount: i.ratings_count.$t,
       publicationYear: i.original_publication_year.$t,
-      type: 'book'
-    })
-  })
+      type: "book"
+    });
+  });
   return formatted;
-}
+};
 
 // let author = parsedData.GoodreadsResponse.search.results.work[i].best_book.author.name
 //     let image = parsedData.GoodreadsResponse.search.results.work[i].best_book.image_url
@@ -60,7 +64,7 @@ module.exports.formatBooks = (res, type) => {
 //     let ratingsCount = parsedData.GoodreadsResponse.search.results.work[i].ratings_count.$t
 //     let publicationYear = parsedData.GoodreadsResponse.search.results.work[i].original_publication_year.$t
 
-module.exports.limitToFive = (array) => {
+module.exports.limitToFive = array => {
   const limitted = [];
   if (array.length < 5) {
     return [...array];
@@ -69,11 +73,13 @@ module.exports.limitToFive = (array) => {
     limitted.push(array[i]);
   }
   return limitted;
-}
+};
 
-module.exports.formatUrl = (arr) => {
-  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${arr[2].moviedb_id}`;
-}
+module.exports.formatUrl = arr => {
+  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${
+    arr[2].moviedb_id
+  }`;
+};
 
 module.exports.formatBookData = (res, type) => {
   const formatted = [];
@@ -87,7 +93,7 @@ module.exports.formatBookData = (res, type) => {
       vote_avg: i.vote_average,
       vote_count: i.vote_count,
       type
-    })
-  })
+    });
+  });
   return formatted;
-}
+};
