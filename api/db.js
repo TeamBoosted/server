@@ -32,7 +32,6 @@ module.exports.getLastThreeMedia = (req, res) => {
         axios
           .get(url)
             .then(response => {
-              console.log('respose from LastThreeMedia', response);
               res.send(response.data);
             })
       })
