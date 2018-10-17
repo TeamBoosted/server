@@ -69,7 +69,6 @@ module.exports.getManyMovieReccs = (req, res) => {
   // };
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
-      console.log('response');
       response.forEach(data => {
         if(data) {
           let parsed = JSON.parse(data);
