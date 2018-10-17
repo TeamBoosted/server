@@ -4,7 +4,6 @@ const PersonalityInsightsV3 = require("watson-developer-cloud/personality-insigh
 const ToneAnalyzerV3 = require("watson-developer-cloud/tone-analyzer/v3");
 
 module.exports.getPersonality = (req, res) => {
-
   var personalityInsights = new PersonalityInsightsV3({
     username: process.env.WATSON_USERNAME,
     password: process.env.WATSON_PASSWORD,
