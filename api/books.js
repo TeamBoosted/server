@@ -36,6 +36,7 @@ module.exports.getBookRecsByGenre = async (req, res) => {
   const { genre_id } = req.params;
   try {
     let bookData = await axios.get(`${url}/db/getBookRecsByGenre/${genre_id}`);
+    if (bookData === null) return res.send(null);
     const body = [];
     const random = (limit) => {
       return Math.floor(Math.random() * (limit));

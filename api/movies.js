@@ -45,7 +45,7 @@ module.exports.getMovieRecc = (req, res) => {
 
   client.getAsync(movieId)
     .then(response => {
-      if(!response) {
+      if (!response) {
         axios
           .get(url, { params })
           .then(response => {
@@ -70,7 +70,7 @@ module.exports.getManyMovieReccs = (req, res) => {
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
       response.forEach(data => {
-        if(data) {
+        if (data) {
           let parsed = JSON.parse(data);
           body.push(parsed);
         }
@@ -78,40 +78,55 @@ module.exports.getManyMovieReccs = (req, res) => {
       res.send(body);
     })
     .catch(console.log);
-  }
-  // Promise.all([
-  //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
-  //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
-  //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id2}/recommendations`, { params })
-  // ]).then(data => {
-  //   // const body = [];
-  //   data.forEach(response => {
-  //     const results = response.data.results;
-  //     const limittedData = limitToFive(results);
-  //     const formatted = formatData(limittedData, 'movie');
-  //     body.push(formatted);
-  //   })
-  //   res.send(body);
-  // })
-  // .catch(console.log);
+}
 
-  module.exports.movieRecByGenre = async (req, res) => {
-    const { genreId } = req.params;
-    const url = 'https://api.themoviedb.org/3/discover/movie';
-    const params = {
-      with_genres: `${genreId}`,
-      page: '1',
-      include_video: 'false',
-      include_adult: 'false',
-      sort_by: 'popularity.desc',
-      language: 'en-US',
-      api_key
-    }
-    try {
-      const response = await axios.get(url, { params })
-      const formatted = formatData(response.data.results, 'movie');
-      res.send(formatted);
-    } catch (err) {
-      console.log(err);
-    }
+module.exports.getRecsFromLastThree = (movieId0, movieId1, movieId2) => {
+  return client.mgetAsync(movieId0, movieId1, movieId2)
+    .then(response => {
+      const body = [];
+      response.forEach(data => {
+        if (data) {
+          let parsed = JSON.parse(data);
+          body.push(parsed);
+        }
+      })
+      return body;
+    })
+    .catch(console.log);
+}
+// Promise.all([
+//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
+//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
+//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id2}/recommendations`, { params })
+// ]).then(data => {
+//   // const body = [];
+//   data.forEach(response => {
+//     const results = response.data.results;
+//     const limittedData = limitToFive(results);
+//     const formatted = formatData(limittedData, 'movie');
+//     body.push(formatted);
+//   })
+//   res.send(body);
+// })
+// .catch(console.log);
+
+module.exports.movieRecByGenre = async (req, res) => {
+  const { genreId } = req.params;
+  const url = 'https://api.themoviedb.org/3/discover/movie';
+  const params = {
+    with_genres: `${genreId}`,
+    page: '1',
+    include_video: 'false',
+    include_adult: 'false',
+    sort_by: 'popularity.desc',
+    language: 'en-US',
+    api_key
   }
+  try {
+    const response = await axios.get(url, { params })
+    const formatted = formatData(response.data.results, 'movie');
+    res.send(formatted);
+  } catch (err) {
+    console.log(err);
+  }
+}
