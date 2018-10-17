@@ -127,8 +127,25 @@ module.exports.movieRecByGenre = async (req, res) => {
   try {
     const response = await axios.get(url, { params })
     const formatted = formatData(response.data.results, 'movie');
+    const limit = limitToN(formatted, 2);
     res.send(formatted);
   } catch (err) {
     console.log(err);
   }
+}
+
+module.exports.cache = (req, res) => {
+  const {
+    key,
+    value} = req.body;
+  client.getAsync(key)
+    .then(response => {
+      if (!response) {
+        const string = JSON.stringify(value);
+        client.set(key, string);
+        res.sendStatus(200);
+      } else {
+        res.send(JSON.parse(response));
+      }
+    })
 }

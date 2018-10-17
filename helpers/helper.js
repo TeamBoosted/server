@@ -92,7 +92,10 @@ module.exports.formatBookData = (res, type) => {
       type
     })
   })
-  const data = limitToTwo(formatted)
-  return data;
+  return formatted
 }
+
+// module.exports.cache = (key, value) => {
+
+// }
 

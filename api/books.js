@@ -1,6 +1,6 @@
 const axios = require('axios');
 const api_key = process.env.BOOK_API_KEY;
-const { formatData, limitToFive } = require('../helpers/helper.js');
+const { formatData, limitToN, formatBooks } = require('../helpers/helper.js');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -10,7 +10,6 @@ const client = redis.createClient({
   password: process.env.REDIS_PASS
 });
 var parseString = require('xml2js').parseString;
-const { formatBooks } = require('../helpers/helper.js');
 const url = process.env.DB_URL || 'http://localhost:8081';
 
 
@@ -23,7 +22,8 @@ module.exports.getBooksByTitle = (req, res) => {
         if (err) return console.log(err);
         arrayOfBooks = parsedData.GoodreadsResponse.search[0].results[0].work;
         const formatted = formatBooks(arrayOfBooks);
-        res.json(formatted);
+        const limitted = limitToN(formatted, 10);
+        res.json(limitted);
       })
     })
     .catch(err => {
