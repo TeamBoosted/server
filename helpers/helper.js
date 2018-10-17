@@ -41,6 +41,7 @@ module.exports.formatTV = (res, type) => {
       popularity: i.popularity,
       vote_avg: i.vote_average,
       vote_count: i.vote_count,
+      genre_id: i.genre_ids,
       type
     })
   })
@@ -73,9 +74,11 @@ module.exports.formatBooks = (res, type) => {
 //     let publicationYear = parsedData.GoodreadsResponse.search.results.work[i].original_publication_year.$t
 
 
-module.exports.formatUrl = (arr) => {
-  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${arr[2].moviedb_id}`;
-}
+module.exports.formatUrl = arr => {
+  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${
+    arr[2].moviedb_id
+  }`;
+};
 
 module.exports.formatBookData = (res, type) => {
   const formatted = [];
