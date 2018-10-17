@@ -44,8 +44,8 @@ router
 
 // Book Routes
 router
-.route('/info/books/:query')
-.get(getBooksByTitle);
+  .route('/info/books/:query')
+  .get(getBooksByTitle);
 
 router
   .route('/db/getBookRecsByGenre/:genre_id')
