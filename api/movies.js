@@ -64,12 +64,11 @@ module.exports.getMovieRecc = (req, res) => {
 module.exports.getManyMovieReccs = (req, res) => {
   const { movieId0, movieId1, movieId2 } = req.params;
   const body = [];
-  const params = {
-    api_key
-  };
+  // const params = {
+  //   api_key
+  // };
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
-      console.log('redis',response)
       response.forEach(data => {
         if(data) {
           let parsed = JSON.parse(data);
