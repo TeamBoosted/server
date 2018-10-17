@@ -6,8 +6,8 @@ const ToneAnalyzerV3 = require("watson-developer-cloud/tone-analyzer/v3");
 module.exports.getPersonality = (req, res) => {
 
   var personalityInsights = new PersonalityInsightsV3({
-    username: "264dd11f-9485-4a1d-a4d2-10389711df8f",
-    password: "DIOxnbox8KRp",
+    username: process.env.WATSON_USERNAME,
+    password: process.env.WATSON_PASSWORD,
     version: "2017-10-13",
     url:
       "https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13"
