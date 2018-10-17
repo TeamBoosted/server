@@ -1,9 +1,9 @@
-const limitToTwo = (array) => {
+module.exports.limitToN = (array, n) => {
   const limitted = [];
-  if (array.length <= 2) {
+  if (array.length <= n) {
     return [...array];
   }
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i <= n; i++) {
     limitted.push(array[i]);
   }
   return limitted;
@@ -25,29 +25,29 @@ module.exports.formatData = (res, type) => {
       type
     })
   })
-  const data = limitToTwo(formatted)
-  return data;
+  // const data = limitToN(formatted)
+  return formatted;
 }
 
-module.exports.formatTV = (res, type) => {
-  const formatted = [];
-  res.map(i => {
-    let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
-    return formatted.push({
-      title: i.name,
-      image: theImage,
-      synopsis: i.overview,
-      moviedb_id: i.id,
-      popularity: i.popularity,
-      vote_avg: i.vote_average,
-      vote_count: i.vote_count,
-      genre_id: i.genre_ids,
-      type
-    })
-  })
-  const data = limitToTwo(formatted)
-  return data;
-}
+// module.exports.formatTV = (res, type) => {
+//   const formatted = [];
+//   res.map(i => {
+//     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
+//     return formatted.push({
+//       title: i.name,
+//       image: theImage,
+//       synopsis: i.overview,
+//       moviedb_id: i.id,
+//       popularity: i.popularity,
+//       vote_avg: i.vote_average,
+//       vote_count: i.vote_count,
+//       genre_id: i.genre_ids,
+//       type
+//     })
+//   })
+//   const data = limitToTwo(formatted)
+//   return data;
+// }
 
 
 module.exports.formatBooks = (res, type) => {
@@ -63,8 +63,8 @@ module.exports.formatBooks = (res, type) => {
       type: 'book'
     })
   })
-  const data = limitToTwo(formatted)
-  return data;
+  // const data = limitToTwo(formatted)
+  return formatted;
 }
 
 // let author = parsedData.GoodreadsResponse.search.results.work[i].best_book.author.name
@@ -75,9 +75,7 @@ module.exports.formatBooks = (res, type) => {
 
 
 module.exports.formatUrl = arr => {
-  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${
-    arr[2].moviedb_id
-  }`;
+  return `/api/rec/manyMovies/${arr[0].moviedb_id}&${arr[1].moviedb_id}&${arr[2].moviedb_id}`;
 };
 
 module.exports.formatBookData = (res, type) => {
@@ -94,7 +92,10 @@ module.exports.formatBookData = (res, type) => {
       type
     })
   })
-  const data = limitToTwo(formatted)
-  return data;
+  return formatted
 }
+
+// module.exports.cache = (key, value) => {
+
+// }
 
