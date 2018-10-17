@@ -23,6 +23,7 @@ module.exports.getByTvTitle = (req, res) => {
 
 module.exports.getTvRecc = (req, res) => {
   const tv_id = req.params.tvId;
+  console.log('here are my reqparams \n \n ',req.params)
   const url = `https://api.themoviedb.org/3/tv/${tv_id}/recommendations`;
   const params = {
     api_key

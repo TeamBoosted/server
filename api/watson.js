@@ -1,32 +1,30 @@
-const axios = require('axios');
+const axios = require("axios");
 
-const PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+const PersonalityInsightsV3 = require("watson-developer-cloud/personality-insights/v3");
+const ToneAnalyzerV3 = require("watson-developer-cloud/tone-analyzer/v3");
 
-axios.post('/getPersonality', (req, res) => {
-  console.log(req.body);
+module.exports.getPersonality = (req, res) => {
+
   var personalityInsights = new PersonalityInsightsV3({
-    username: '264dd11f-9485-4a1d-a4d2-10389711df8f',
-    password: 'DIOxnbox8KRp',
-    version: '2017-10-13',
-    url: 'https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13'
+    username: "264dd11f-9485-4a1d-a4d2-10389711df8f",
+    password: "DIOxnbox8KRp",
+    version: "2017-10-13",
+    url:
+      "https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13"
   });
 
   personalityInsights.profile(
     {
       content: req.body.userInfo,
-      content_type: 'text/plain',
+      content_type: "text/plain",
       consumption_preferences: true
     },
     function(err, response) {
       if (err) {
-        console.log('error:', err);
+        console.log("error:", err);
       } else {
-        console.log('success!!!')
-        console.log(JSON.stringify(response, null, 2));
         res.send(response).status(200);
-        // console.log(JSON.stringify(response));
       }
     }
   );
-});
+};
