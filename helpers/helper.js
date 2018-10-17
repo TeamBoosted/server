@@ -98,3 +98,7 @@ module.exports.formatBookData = (res, type) => {
   return data;
 }
 
+// module.exports.cache = (key, value) => {
+
+// }
+

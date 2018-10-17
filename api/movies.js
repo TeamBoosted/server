@@ -70,7 +70,7 @@ module.exports.getManyMovieReccs = (req, res) => {
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
       response.forEach(data => {
-        if(data) {
+        if (data) {
           let parsed = JSON.parse(data);
           body.push(parsed);
         }
@@ -114,4 +114,18 @@ module.exports.getManyMovieReccs = (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  module.exports.cache = (req, res) => {
+    const { key, value } = req.body;
+    client.getAsync(key)
+      .then(response => {
+        if(!response) {
+          const string = JSON.stringify(value);
+          client.set(key, string);
+          res.sendStatus(200);
+        } else {
+          res.send(JSON.parse(response));
+        }
+      })
   }
