@@ -15,8 +15,8 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  console.log("Req.url", req.url);
-  console.log("Req.method", req.method);
+  console.log("Req.url\n-------", req.url);
+  console.log("Req.method\n-------", req.method);
   next();
 });
 app.use(cors());

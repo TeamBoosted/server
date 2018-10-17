@@ -28,23 +28,31 @@ module.exports.saveMediumToDb = (req, res) => {
 module.exports.getLastThreeMedia = (req, res) => {
   const id_token = req.body.data.id_token;
   axios
-    .post('http://localhost:8081/db/getLastThreeMedia', { id_token })
-      .then(data => {
-        const url = formatUrl(data.data);
-        axios
-          .get(url)
-            .then(response => {
-              console.log('respose from LastThreeMedia', response);
-              res.send(response.data);
-            })
-      })
-      .catch(err => {
-        console.log(err);
-        res.sendStatus(500);
+    .post("http://localhost:8081/db/getLastThreeMedia", { id_token })
+    .then(data => {
+      const url = formatUrl(data.data);
+      axios.get(url).then(response => {
+        console.log("respose from LastThreeMedia", response);
+        res.send(response.data);
       });
     })
     .catch(err => {
       console.log(err);
+      res.sendStatus(500);
+    });
+};
+
+module.exports.getAllMedia = (req, res) => {
+  const id_token = req.params.token_id;
+
+  axios
+    .get(`http://localhost:8081/db/getAllMedia/${id_token}`)
+    .then(userMedias => {
+      console.log("DB RESPONSE TO SERVER:************", userMedias);
+      res.send(userMedias.data);
+    })
+    .catch(err => {
+      console.log("i done messed up", err);
       res.sendStatus(500);
     });
 };
