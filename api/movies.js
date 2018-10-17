@@ -1,6 +1,6 @@
 const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
-const { formatData } = require('../helpers/helper.js');
+const { formatData, limitToN } = require('../helpers/helper.js');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -25,8 +25,9 @@ module.exports.getMovieByTitle = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            client.set(query, JSON.stringify(formatted));
-            res.send(formatted);
+            const limitted = limitToN(formatted, 10);
+            client.set(query, JSON.stringify(limitted));
+            res.send(limitted);
           })
           .catch(console.log)
       } else {
@@ -50,8 +51,9 @@ module.exports.getMovieRecc = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            client.set(movieId, JSON.stringify(formatted));
-            res.send(formatted);
+            const limitted = limitToN(formatted, 2)
+            client.set(movieId, JSON.stringify(limitted));
+            res.send(limitted);
           })
       } else {
         res.send(response);
@@ -70,7 +72,7 @@ module.exports.getManyMovieReccs = (req, res) => {
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
       response.forEach(data => {
-        if(data) {
+        if (data) {
           let parsed = JSON.parse(data);
           body.push(parsed);
         }
@@ -78,6 +80,7 @@ module.exports.getManyMovieReccs = (req, res) => {
       res.send(body);
     })
     .catch(console.log);
+
   }
   // Promise.all([
   //   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
