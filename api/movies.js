@@ -110,7 +110,6 @@ module.exports.getManyMovieReccs = (req, res) => {
     }
     try {
       const response = await axios.get(url, { params })
-      console.log('----------\nGetting response from discover\n----------\n', response);
       const formatted = formatData(response.data.results, 'movie');
       res.send(formatted);
     } catch (err) {

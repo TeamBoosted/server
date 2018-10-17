@@ -1,6 +1,6 @@
-const axios = require("axios");
-const { formatUrl } = require("../helpers/helper.js");
-const url = "http://localhost:8081";
+const axios = require('axios');
+const { formatUrl } = require('../helpers/helper.js');
+const url = process.env.DB_URL || 'http://localhost:8081';
 
 module.exports.saveMediumToDb = (req, res) => {
   const mediumObj = req.body.data.movie;
