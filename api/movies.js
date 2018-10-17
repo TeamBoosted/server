@@ -1,6 +1,6 @@
 const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
-const { formatData } = require('../helpers/helper.js');
+const { formatData, limitToN } = require('../helpers/helper.js');
 const redis = require('redis');
 const bluebird = require('bluebird');
 bluebird.promisifyAll(redis);
@@ -25,8 +25,9 @@ module.exports.getMovieByTitle = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            client.set(query, JSON.stringify(formatted));
-            res.send(formatted);
+            const limitted = limitToN(formatted, 10);
+            client.set(query, JSON.stringify(limitted));
+            res.send(limitted);
           })
           .catch(console.log)
       } else {
@@ -50,8 +51,9 @@ module.exports.getMovieRecc = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            client.set(movieId, JSON.stringify(formatted));
-            res.send(formatted);
+            const limitted = limitToN(formatted, 2)
+            client.set(movieId, JSON.stringify(limitted));
+            res.send(limitted);
           })
       } else {
         res.send(response);
