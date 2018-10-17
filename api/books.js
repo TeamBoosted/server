@@ -42,7 +42,6 @@ module.exports.getBookRecsByGenre = async (req, res) => {
       return Math.floor(Math.random() * (limit));
     }
     const len = bookData.data.length;
-    console.log('BookData -------------\n', bookData);
     body.push(bookData.data[random(len)]);
     body.push(bookData.data[random(len)]);
     res.send(body);
