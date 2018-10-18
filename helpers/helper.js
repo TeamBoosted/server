@@ -73,4 +73,3 @@ module.exports.formatBookData = (res, type) => {
 }
 
 
-
