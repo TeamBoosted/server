@@ -1,7 +1,14 @@
 const axios = require('axios');
 const api_key = process.env.MOVIE_API_KEY;
-const { formatData, formatTV } = require('../helpers/helper.js');
-
+const { formatData, limitToN } = require('../helpers/helper.js');
+const redis = require('redis');
+const bluebird = require('bluebird');
+bluebird.promisifyAll(redis);
+const client = redis.createClient({
+  port: process.env.REDIS_PORT,
+  host: process.env.REDIS_URL,
+  password: process.env.REDIS_PASS
+});
 
 module.exports.getByTvTitle = (req, res) => {
   const url = 'https://api.themoviedb.org/3/search/tv';
@@ -11,30 +18,47 @@ module.exports.getByTvTitle = (req, res) => {
     api_key
   };
 
-  axios
-    .get(url, { params })
+  client.getAsync(query)
     .then(response => {
-      const data = response.data.results;
-      const formatted = formatData(data, 'tv');
-      res.send(formatted);
+      if (!response) {
+        axios
+          .get(url, { params })
+          .then(response => {
+            const formatted = formatData(response.data.results, 'tv');
+            const limitted = limitToN(formatted, 10);
+            client.set(query, JSON.stringify(limitted));
+            res.send(limitted);
+          })
+          .catch(console.log)
+      } else {
+        res.send(response);
+      }
     })
     .catch(console.log);
 }
 
 module.exports.getTvRecc = (req, res) => {
-  const tv_id = req.params.tvId;
-  const url = `https://api.themoviedb.org/3/tv/${tv_id}/recommendations`;
+  const { tvId } = req.params;
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/recommendations`;
   const params = {
     api_key
   };
 
-  axios
-    .get(url, { params })
+
+  client.getAsync(tvId)
     .then(response => {
-      const data = response.data.results;
-      const formatted = formatData(data, 'tv');
-      console.log('WHAT IS THE TV RECCCC DATA',formatted)
-      res.send(formatted);
+      if (!response) {
+        axios
+          .get(url, { params })
+          .then(response => {
+            const formatted = formatData(response.data.results, 'tv');
+            const limitted = limitToN(formatted, 2);
+            client.set(tvId, JSON.stringify(limitted));
+            res.send(limitted);
+          })
+      } else {
+        res.send(response);
+      }
     })
     .catch(console.log);
 }
