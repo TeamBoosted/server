@@ -1,20 +1,19 @@
-const axios = require('axios');
+const axios = require("axios");
 const api_key = process.env.BOOK_API_KEY;
-const { formatData, limitToN, formatBooks } = require('../helpers/helper.js');
-const redis = require('redis');
-const bluebird = require('bluebird');
+const { formatData, limitToN, formatBooks } = require("../helpers/helper.js");
+const redis = require("redis");
+const bluebird = require("bluebird");
 bluebird.promisifyAll(redis);
 const client = redis.createClient({
   port: process.env.REDIS_PORT,
   host: process.env.REDIS_URL,
   password: process.env.REDIS_PASS
 });
-var parseString = require('xml2js').parseString;
-const url = process.env.DB_URL || 'http://localhost:8081';
-
+var parseString = require("xml2js").parseString;
+const url = process.env.DB_URL || "http://localhost:8081";
 
 module.exports.getBooksByTitle = (req, res) => {
-  let title = req.params.query
+  let title = req.params.query;
   axios
     .get(`https://www.goodreads.com/search/index.xml?key=${api_key}&q=${title}`)
     .then(data => {
@@ -24,12 +23,12 @@ module.exports.getBooksByTitle = (req, res) => {
         const formatted = formatBooks(arrayOfBooks);
         const limitted = limitToN(formatted, 10);
         res.json(limitted);
-      })
+      });
     })
     .catch(err => {
       console.log(err);
       res.sendStatus(500);
-    })
+    });
 };
 
 module.exports.getBookRecsByGenre = async (req, res) => {
@@ -38,13 +37,13 @@ module.exports.getBookRecsByGenre = async (req, res) => {
     let bookData = await axios.get(`${url}/db/getBookRecsByGenre/${genre_id}`);
     if (bookData === null) return res.send(null);
     const body = [];
-    const random = (limit) => {
-      return Math.floor(Math.random() * (limit));
-    }
+    const random = limit => {
+      return Math.floor(Math.random() * limit);
+    };
     const len = bookData.data.length;
     body.push(bookData.data[random(len)]);
     body.push(bookData.data[random(len)]);
-    res.send(body);
+    res.send(bookData.data);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
@@ -58,7 +57,6 @@ module.exports.getBookRecsByGenre = async (req, res) => {
 //     method: 'GET',
 //     uri:`https://www.goodreads.com/search/index.xml?key=uSG8wKoxG3f65Jv5iClwA&q=${title}`
 
-
 //   }
 
 //   request(options, function (err,response,body){
@@ -71,7 +69,6 @@ module.exports.getBookRecsByGenre = async (req, res) => {
 //     if (theBod.GoodreadsResponse.search.results.work) {
 //        console.log(theBod.GoodreadsResponse.search.results.work.length)
 
-
 //       for (var i = 0; i < theBod.GoodreadsResponse.search.results.work.length; i++) {
 
 //         let apiTitle = theBod.GoodreadsResponse.search.results.work[i].best_book.title
@@ -82,7 +79,6 @@ module.exports.getBookRecsByGenre = async (req, res) => {
 //         let rating = theBod.GoodreadsResponse.search.results.work[i].average_rating
 //         let ratingsCount = theBod.GoodreadsResponse.search.results.work[i].ratings_count.$t
 //         let publicationYear = theBod.GoodreadsResponse.search.results.work[i].original_publication_year.$t
-
 
 //         insert(apiTitle, apiAuthor, infoLink, categories, image, rating, ratingsCount, publicationYear, function(err,data) {
 //           if(err) {
