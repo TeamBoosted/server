@@ -30,8 +30,6 @@ app.get("/msg", (req, res) => {
 
 app.use("/api", api);
 
-app.get('*', (req, res) => {
-  res.sendFile(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist'));
-});
+app.use('*', express.static(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist')));
 
 module.exports = server;
