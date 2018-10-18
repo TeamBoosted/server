@@ -31,7 +31,8 @@ app.get("/msg", (req, res) => {
 app.use("/api", api);
 
 app.get('*', (req, res) => {
-  res.sendFile(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist'));
+  res.redirect('/');
+  // res.redirect(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist'));
 });
 
 module.exports = server;
