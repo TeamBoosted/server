@@ -96,21 +96,6 @@ module.exports.getRecsFromLastThree = (movieId0, movieId1, movieId2) => {
     })
     .catch(console.log);
 }
-// Promise.all([
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id2}/recommendations`, { params })
-// ]).then(data => {
-//   // const body = [];
-//   data.forEach(response => {
-//     const results = response.data.results;
-//     const limittedData = limitToFive(results);
-//     const formatted = formatData(limittedData, 'movie');
-//     body.push(formatted);
-//   })
-//   res.send(body);
-// })
-// .catch(console.log);
 
 module.exports.movieRecByGenre = async (req, res) => {
   const { genreId } = req.params;

@@ -67,7 +67,6 @@ module.exports.getAllMedia = (req, res) => {
   axios
     .get(`${url}/db/getAllMedia/${id_token}`)
     .then(userMedias => {
-      console.log("DB RESPONSE TO SERVER:************", userMedias);
       res.send(userMedias.data);
     })
     .catch(err => {
