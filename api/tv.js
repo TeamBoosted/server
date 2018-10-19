@@ -52,9 +52,9 @@ module.exports.getTvRecc = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'tv');
-            const limitted = limitToN(formatted, 2);
-            client.set(tvId, JSON.stringify(limitted));
-            res.send(limitted);
+            // const limitted = limitToN(formatted, 2);
+            client.set(tvId, JSON.stringify(formatted));
+            res.send(formatted);
           })
       } else {
         res.send(response);
@@ -79,6 +79,7 @@ module.exports.tvRecByGenre = async (req, res) => {
   try {
     const response = await axios.get(url, { params })
     const formatted = formatData(response.data.results, 'tv');
+    // const limit = limitToN(formatted);
     res.send(formatted);
   } catch (err) {
     console.log(err);

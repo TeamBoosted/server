@@ -3,7 +3,7 @@ module.exports.limitToN = (array, n) => {
   if (array.length <= n) {
     return [...array];
   }
-  for (let i = 0; i <= n; i++) {
+  for (let i = 0; i < n; i++) {
     limitted.push(array[i]);
   }
   return limitted;
@@ -14,7 +14,7 @@ module.exports.formatData = (res, type) => {
   res.map(i => {
     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
     return formatted.push({
-      title: i.title || i.name,
+      title: i.title ? i.title : i.name,
       image:  theImage,
       synopsis: i.overview,
       moviedb_id: i.id,
@@ -25,30 +25,8 @@ module.exports.formatData = (res, type) => {
       type
     })
   })
-  // const data = limitToN(formatted)
   return formatted;
 }
-
-// module.exports.formatTV = (res, type) => {
-//   const formatted = [];
-//   res.map(i => {
-//     let theImage = `https://image.tmdb.org/t/p/w600_and_h900_bestv2${i.poster_path}`
-//     return formatted.push({
-//       title: i.name,
-//       image: theImage,
-//       synopsis: i.overview,
-//       moviedb_id: i.id,
-//       popularity: i.popularity,
-//       vote_avg: i.vote_average,
-//       vote_count: i.vote_count,
-//       genre_id: i.genre_ids,
-//       type
-//     })
-//   })
-//   const data = limitToTwo(formatted)
-//   return data;
-// }
-
 
 module.exports.formatBooks = (res, type) => {
   const formatted = [];
@@ -63,7 +41,6 @@ module.exports.formatBooks = (res, type) => {
       type: 'book'
     })
   })
-  // const data = limitToTwo(formatted)
   return formatted;
 }
 
@@ -95,7 +72,4 @@ module.exports.formatBookData = (res, type) => {
   return formatted
 }
 
-// module.exports.cache = (key, value) => {
-
-// }
 
