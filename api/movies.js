@@ -25,9 +25,9 @@ module.exports.getMovieByTitle = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            const limitted = limitToN(formatted, 10);
-            client.set(query, JSON.stringify(limitted));
-            res.send(limitted);
+            // const limitted = limitToN(formatted, 10);
+            client.set(query, JSON.stringify(formatted));
+            res.send(formatted);
           })
           .catch(console.log)
       } else {
@@ -51,9 +51,9 @@ module.exports.getMovieRecc = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            const limitted = limitToN(formatted, 2)
-            client.set(movieId, JSON.stringify(limitted));
-            res.send(limitted);
+            // const limitted = limitToN(formatted, 2)
+            client.set(movieId, JSON.stringify(formatted));
+            res.send(formatted);
           })
       } else {
         res.send(response);
@@ -113,7 +113,7 @@ module.exports.movieRecByGenre = async (req, res) => {
   try {
     const response = await axios.get(url, { params })
     const formatted = formatData(response.data.results, 'movie');
-    const limit = limitToN(formatted, 2);
+    // const limit = limitToN(formatted, 2);
     res.send(formatted);
   } catch (err) {
     console.log(err);

@@ -3,7 +3,7 @@ module.exports.limitToN = (array, n) => {
   if (array.length <= n) {
     return [...array];
   }
-  for (let i = 0; i <= n; i++) {
+  for (let i = 0; i < n; i++) {
     limitted.push(array[i]);
   }
   return limitted;
