@@ -21,8 +21,8 @@ module.exports.getBooksByTitle = (req, res) => {
         if (err) return console.log(err);
         arrayOfBooks = parsedData.GoodreadsResponse.search[0].results[0].work;
         const formatted = formatBooks(arrayOfBooks);
-        // const limitted = limitToN(formatted, 10);
-        res.json(formatted);
+        const limitted = limitToN(formatted, 10);
+        res.json(limitted);
       });
     })
     .catch(err => {

@@ -25,9 +25,9 @@ module.exports.getMovieByTitle = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            // const limitted = limitToN(formatted, 10);
-            client.set(query, JSON.stringify(formatted));
-            res.send(formatted);
+            const limitted = limitToN(formatted, 10);
+            client.set(query, JSON.stringify(limitted));
+            res.send(limitted);
           })
           .catch(console.log)
       } else {
