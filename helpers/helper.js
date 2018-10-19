@@ -33,6 +33,7 @@ module.exports.formatBooks = (res, type) => {
   res.map(i => {
     return formatted.push({
       title: i.best_book[0].title[0],
+      moviedb_id: i.best_book[0].id[0]._,
       author: i.best_book[0].author[0].name[0],
       image: i.best_book[0].image_url[0],
       rating: i.average_rating[0],
