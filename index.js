@@ -15,8 +15,8 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  console.log("Req.url\n-------", req.url);
-  console.log("Req.method\n-------", req.method);
+  console.log('Req.url\n-------\n', req.url);
+  console.log('Req.method\n-------\n', req.method);
   next();
 });
 app.use(cors());
@@ -28,7 +28,7 @@ app.get("/msg", (req, res) => {
   res.json({ what: "up" });
 });
 
-app.use("/api", api);
+app.use('/api', api);
 
 app.use('*', express.static(process.env.CLIENT_FOLDER || path.join(__dirname, '../client/dist')));
 

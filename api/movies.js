@@ -51,9 +51,9 @@ module.exports.getMovieRecc = (req, res) => {
           .get(url, { params })
           .then(response => {
             const formatted = formatData(response.data.results, 'movie');
-            const limitted = limitToN(formatted, 2)
-            client.set(movieId, JSON.stringify(limitted));
-            res.send(limitted);
+            // const limitted = limitToN(formatted, 2)
+            client.set(movieId, JSON.stringify(formatted));
+            res.send(formatted);
           })
       } else {
         res.send(response);
@@ -71,7 +71,7 @@ module.exports.getManyMovieReccs = (req, res) => {
   // };
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
-      console.log('redis',response)
+      console.log('redis', response)
       response.forEach(data => {
         if (data) {
           let parsed = JSON.parse(data);
@@ -97,21 +97,6 @@ module.exports.getRecsFromLastThree = (movieId0, movieId1, movieId2) => {
     })
     .catch(console.log);
 }
-// Promise.all([
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id0}/recommendations`, { params }), 
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id1}/recommendations`, { params }), 
-//   axios.get(`https://api.themoviedb.org/3/movie/${movie_id2}/recommendations`, { params })
-// ]).then(data => {
-//   // const body = [];
-//   data.forEach(response => {
-//     const results = response.data.results;
-//     const limittedData = limitToFive(results);
-//     const formatted = formatData(limittedData, 'movie');
-//     body.push(formatted);
-//   })
-//   res.send(body);
-// })
-// .catch(console.log);
 
 module.exports.movieRecByGenre = async (req, res) => {
   const { genreId } = req.params;
@@ -128,7 +113,7 @@ module.exports.movieRecByGenre = async (req, res) => {
   try {
     const response = await axios.get(url, { params })
     const formatted = formatData(response.data.results, 'movie');
-    const limit = limitToN(formatted, 2);
+    // const limit = limitToN(formatted, 2);
     res.send(formatted);
   } catch (err) {
     console.log(err);
@@ -138,7 +123,7 @@ module.exports.movieRecByGenre = async (req, res) => {
 module.exports.cache = (req, res) => {
   const {
     key,
-    value} = req.body;
+    value } = req.body;
   client.getAsync(key)
     .then(response => {
       if (!response) {
