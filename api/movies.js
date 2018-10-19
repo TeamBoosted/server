@@ -71,7 +71,6 @@ module.exports.getManyMovieReccs = (req, res) => {
   // };
   client.mgetAsync(movieId0, movieId1, movieId2)
     .then(response => {
-      console.log('redis',response)
       response.forEach(data => {
         if (data) {
           let parsed = JSON.parse(data);
@@ -138,7 +137,7 @@ module.exports.movieRecByGenre = async (req, res) => {
 module.exports.cache = (req, res) => {
   const {
     key,
-    value} = req.body;
+    value } = req.body;
   client.getAsync(key)
     .then(response => {
       if (!response) {
