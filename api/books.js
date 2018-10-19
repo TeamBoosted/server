@@ -36,7 +36,6 @@ module.exports.getBookRecsByGenre = async (req, res) => {
   try {
     let bookData = await axios.get(`${url}/db/getBookRecsByGenre/${genre_id}`);
     if (bookData === null) return res.send(null);
-    // const limitted = limitToN(bookData.data, 5);
     res.send(bookData.data);
   } catch (err) {
     console.log(err);
